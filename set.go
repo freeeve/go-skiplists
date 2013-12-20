@@ -12,9 +12,10 @@ type setElement struct {
 	next *setElement
 }
 
-// NewSet returns a new empty set
-func NewSet(f func(a, b interface{}) bool) *Set {
-	return &Set{f, nil}
+// NewSet returns a new empty set, it takes a
+// comparison function that should implement Less
+func NewSet(less func(a, b interface{}) bool) *Set {
+	return &Set{less, nil}
 }
 
 // Add adds an element to the set, doing nothing if it exists

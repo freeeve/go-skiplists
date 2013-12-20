@@ -13,9 +13,10 @@ type mapElement struct {
 	next *mapElement
 }
 
-// NewMap creates a new empty map
-func NewMap(f func(a, b interface{}) bool) *Map {
-	return &Map{f, nil}
+// NewMap creates a new empty map, it takes a
+// comparison function that should implement Less
+func NewMap(less func(a, b interface{}) bool) *Map {
+	return &Map{less, nil}
 }
 
 // Put takes a key and value, and puts the value
