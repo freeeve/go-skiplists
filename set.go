@@ -50,6 +50,8 @@ func (set *Set) Add(k interface{}) bool {
 		prev = e
 		e = e.next
 	}
+	// this should never happen
+	return false
 }
 
 // Len returns the length of the set

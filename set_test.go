@@ -1,4 +1,4 @@
-package main
+package skiplist
 
 import (
 	. "launchpad.net/gocheck"

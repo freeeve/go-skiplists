@@ -1,4 +1,4 @@
-package main
+package skiplist
 
 // Map is the struct to hold the details of a map
 type Map struct {
@@ -53,6 +53,8 @@ func (m *Map) Put(k interface{}, v interface{}) bool {
 		prev = e
 		e = e.next
 	}
+	// this should never happen
+	return false
 }
 
 // Len returns the length of a Map
