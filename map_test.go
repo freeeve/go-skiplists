@@ -1,7 +1,6 @@
-package map_test
+package main
 
 import (
-	"github.com/JnBrymN/GoSkipList"
 	. "launchpad.net/gocheck"
 	"testing"
 )
@@ -15,15 +14,18 @@ func Test(t *testing.T) {
 	TestingT(t)
 }
 
-func compareInts(a, b int) bool { return a < b }
+func compareInts(a, b interface{}) bool { return a.(int) < b.(int) }
 
 func (s *MapSuite) TestNewMap(c *C) {
 	m := NewMap(compareInts)
+	if m == nil {
+		c.Fatal("m is nil")
+	}
 }
 
 func (s *MapSuite) TestPut(c *C) {
 	m := NewMap(compareInts)
-	m.put(1, 1)
+	m.Put(1, 1)
 }
 
 func (s *MapSuite) TestLen(c *C) {
@@ -33,6 +35,8 @@ func (s *MapSuite) TestLen(c *C) {
 	c.Assert(m.Len(), Equals, 1)
 	m.Put(2, 2)
 	c.Assert(m.Len(), Equals, 2)
+	m.Put(2, 3)
+	c.Assert(m.Len(), Equals, 2)
 }
 
 func (s *MapSuite) TestGetEmpty(c *C) {
@@ -41,8 +45,18 @@ func (s *MapSuite) TestGetEmpty(c *C) {
 	c.Assert(i, IsNil)
 	c.Assert(ok, Equals, false)
 }
+
 func (s *MapSuite) TestGetNotEmpty(c *C) {
 	m := NewMap(compareInts)
+	m.Put(1, 37)
+	i, ok := m.Get(1)
+	c.Assert(i, Equals, 37)
+	c.Assert(ok, Equals, true)
+}
+
+func (s *MapSuite) TestPutOverwrite(c *C) {
+	m := NewMap(compareInts)
+	m.Put(1, 1)
 	m.Put(1, 37)
 	i, ok := m.Get(1)
 	c.Assert(i, Equals, 37)

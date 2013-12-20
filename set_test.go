@@ -1,40 +1,31 @@
-package set_test
+package main
 
 import (
-	"github.com/JnBrymN/GoSkipList"
 	. "launchpad.net/gocheck"
-	"testing"
 )
 
 type SetSuite struct{}
 
-var _ = Suite(&DriverSuite{})
+var _ = Suite(&SetSuite{})
 
-// gocheck link to go test - only needs doing once for package
-func Test(t *testing.T) {
-	TestingT(t)
-}
-
-func compareInts(a, b int) bool { return a < b }
-
-func (s *CSLSuite) TestAdd(c *C) {
+func (s *SetSuite) TestAdd(c *C) {
 	set := NewSet(compareInts)
 	set.Add(1)
 }
 
-func (s *CSLSuite) TestLen(c *C) {
+func (s *SetSuite) TestLen(c *C) {
 	set := NewSet(compareInts)
 	c.Assert(set.Len(), Equals, 0)
 	set.Add(1)
 	c.Assert(set.Len(), Equals, 1)
-	et.Add(2)
+	set.Add(2)
 	c.Assert(set.Len(), Equals, 2)
 	set.Add(2)
 	c.Assert(set.Len(), Equals, 2)
 }
 
-func (s *CSLSuite) TestContains(c *C) {
-	et := New(compareInts)
+func (s *SetSuite) TestContains(c *C) {
+	set := NewSet(compareInts)
 	c.Assert(set.Contains(1), Equals, false)
 	set.Add(1)
 	c.Assert(set.Contains(1), Equals, true)
