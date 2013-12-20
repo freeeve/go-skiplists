@@ -8,7 +8,7 @@ import (
 
 type MapSuite struct{}
 
-var _ = Suite(&DriverSuite{})
+var _ = Suite(&MapSuite{})
 
 // gocheck link to go test - only needs doing once for whole lib
 func Test(t *testing.T) {
