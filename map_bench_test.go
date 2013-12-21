@@ -54,3 +54,6 @@ func (s *MapBenchSuite) BenchmarkGet100000(c *C) {
 func (s *MapBenchSuite) BenchmarkGet1000000(c *C) {
 	benchmarkGetN(1000000, c)
 }
+func (s *MapBenchSuite) BenchmarkGet10000000(c *C) {
+	benchmarkGetN(10000000, c)
+}

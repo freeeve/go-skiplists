@@ -28,8 +28,8 @@ type mapElement struct {
 func NewMap(less func(a, b interface{}) bool) *Map {
 	return &Map{
 		comp:      less,
-		head:      make([]*mapElement, 20),
-		maxLevels: 20,
+		head:      make([]*mapElement, 32),
+		maxLevels: 32,
 		r:         rand.New(rand.NewSource(123123))}
 }
 
