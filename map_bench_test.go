@@ -26,7 +26,9 @@ func fillMap(n int) *Map {
 }
 
 func benchmarkGetN(n int, c *C) {
+	c.StopTimer()
 	m := fillMap(n)
+	c.StartTimer()
 	i := 0
 	for ; i < c.N; i++ {
 		x, ok := m.Get(i)
@@ -47,10 +49,8 @@ func (s *MapBenchSuite) BenchmarkGet10000(c *C) {
 	benchmarkGetN(10000, c)
 }
 func (s *MapBenchSuite) BenchmarkGet100000(c *C) {
-	c.Skip("too slow")
 	benchmarkGetN(100000, c)
 }
 func (s *MapBenchSuite) BenchmarkGet1000000(c *C) {
-	c.Skip("too slow")
 	benchmarkGetN(1000000, c)
 }
