@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"io"
 	"log"
-	"os"
 )
 
 type RecordPersister interface {
@@ -23,22 +22,12 @@ type Int64Int64Record struct {
 	Val int64
 }
 
-func (m *Map) Persist(filename string, rp RecordPersister) error {
-	f, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+func (m *Map) Persist(f io.Writer, rp RecordPersister) error {
 	rp.Persist(m, f)
 	return nil
 }
 
-func (m *Map) Merge(filename string, rp RecordPersister) error {
-	f, err := os.Open(filename)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+func (m *Map) Merge(f io.Reader, rp RecordPersister) error {
 	rp.Merge(m, f)
 	return nil
 }
