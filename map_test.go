@@ -2,6 +2,7 @@ package skiplist
 
 import (
 	. "launchpad.net/gocheck"
+	"math/rand"
 	"testing"
 )
 
@@ -61,4 +62,31 @@ func (s *MapSuite) TestPutOverwrite(c *C) {
 	i, ok := m.Get(1)
 	c.Assert(i, Equals, 37)
 	c.Assert(ok, Equals, true)
+}
+
+func (s *MapSuite) TestRandSingleThread(c *C) {
+	m := NewMap(compareInts)
+	cm := map[int]int{}
+	r := rand.New(rand.NewSource(123123123))
+
+	for i := 0; i < 100000; i++ {
+		j := r.Int()
+		// slight chance to remove
+		if j%7 == 0 {
+			k := r.Int()
+			m.Put(k, k*2)
+			cm[k] = k * 2
+		} else {
+			k := r.Int()
+			m.Put(k, k*2)
+			cm[k] = k * 2
+		}
+	}
+
+	for k, v := range cm {
+		x, ok := m.Get(k)
+		c.Assert(ok, Equals, true)
+		c.Assert(x, Equals, v)
+	}
+	c.Assert(m.Len(), Equals, len(cm))
 }

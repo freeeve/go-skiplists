@@ -3,6 +3,7 @@ package skiplist
 import (
 	. "launchpad.net/gocheck"
 	"log"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -10,48 +11,48 @@ import (
 type MapConcurrentSuite struct{}
 
 var _ = Suite(&MapConcurrentSuite{})
-var chunksize = 1000000
+var chunksize = 100000
 
 func writer(i int, m *Map, w *sync.WaitGroup) {
 	for j := 0; j <= chunksize; j++ {
 		m.Put(i, j)
 		time.Sleep(1 * time.Nanosecond)
 	}
-	log.Println(i, "; writer done")
+	//	log.Println(i, "; writer done;", m.Mutex())
 	w.Done()
 }
 
 func remover(i int, m *Map, w *sync.WaitGroup) {
-	for j := 0; j < 10; j++ {
+	for j := 0; j < 1000; j++ {
 		m.Remove(i)
 		//		log.Println("removed:", i)
 		time.Sleep(1 * time.Nanosecond)
 	}
-	log.Println(i, "; remover done")
+	//	log.Println(i, "; remover done", m.Mutex())
 	w.Done()
 }
 
 // try to break the map...
-// concurrently adding stuff to the same key
+// concurrently adding stuff and removing stuff
 func (s *MapSuite) TestConcurPutOverwrite(c *C) {
 	//c.Skip("only need to run when testing concurrency")
+	runtime.GOMAXPROCS(2)
 	log.Println("starting concurrent map test; writers should finish last else adjust parameters")
 	m := NewMap(compareInts)
-	m.Put(2, 3)
-	m.Put(0, 1)
 	var w sync.WaitGroup
-	n := 3
+	n := 10
 	w.Add(n * 2)
 	for i := 0; i < n; i++ {
 		go remover(i, m, &w)
 		go writer(i, m, &w)
 	}
 	w.Wait()
-	x, _ := m.Get(0)
-	c.Assert(x, Equals, chunksize)
-	x, _ = m.Get(1)
-	c.Assert(x, Equals, chunksize)
-	x, _ = m.Get(2)
-	c.Assert(x, Equals, chunksize)
+	for i := 0; i < n; i++ {
+		m.Put(i, chunksize)
+	}
+	for i := 0; i < n; i++ {
+		x, _ := m.Get(i)
+		c.Assert(x, Equals, chunksize)
+	}
 	c.Assert(m.Len(), Equals, n)
 }
