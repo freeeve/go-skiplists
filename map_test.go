@@ -15,7 +15,9 @@ func Test(t *testing.T) {
 	TestingT(t)
 }
 
-func compareInts(a, b interface{}) bool { return a.(int) < b.(int) }
+func compareInts(a, b interface{}) bool    { return a.(int) < b.(int) }
+func compareInt64s(a, b interface{}) bool  { return a.(int64) < b.(int64) }
+func compareStrings(a, b interface{}) bool { return a.(string) < b.(string) }
 
 func (s *MapSuite) TestNewMap(c *C) {
 	m := NewMap(compareInts)

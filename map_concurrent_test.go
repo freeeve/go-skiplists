@@ -34,7 +34,7 @@ func remover(i int, m *Map, w *sync.WaitGroup) {
 
 // try to break the map...
 // concurrently adding stuff and removing stuff
-func (s *MapSuite) TestConcurPutOverwrite(c *C) {
+func (s *MapConcurrentSuite) TestConcurPutOverwrite(c *C) {
 	//c.Skip("only need to run when testing concurrency")
 	runtime.GOMAXPROCS(2)
 	log.Println("starting concurrent map test; writers should finish last else adjust parameters")
