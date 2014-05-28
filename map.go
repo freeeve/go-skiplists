@@ -40,7 +40,7 @@ func NewMap(less func(a, b interface{}) bool) *Map {
 	}
 }
 
-func newElement(k interface{}, v interface{}, levels int) *mapElement {
+func newMapElement(k interface{}, v interface{}, levels int) *mapElement {
 	return &mapElement{k, v, make([]*mapElement, levels)}
 }
 
@@ -89,7 +89,7 @@ func (m *Map) Put(k interface{}, v interface{}) bool {
 		}
 	}
 	// create new element
-	e := newElement(k, v, randomLevels(m))
+	e := newMapElement(k, v, randomLevels(m))
 
 	// connect new element up with backPointer
 	for level := 0; level < len(e.next); level++ {

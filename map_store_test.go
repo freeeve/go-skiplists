@@ -3,8 +3,8 @@ package skiplist
 import (
 	"compress/gzip"
 	"fmt"
-	. "launchpad.net/gocheck"
 	"os"
+	. "gopkg.in/check.v1"
 )
 
 type MapStoreSuite struct{}

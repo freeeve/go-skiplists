@@ -1,8 +1,8 @@
 package skiplist
 
 import (
-	. "launchpad.net/gocheck"
 	"math/rand"
+	. "gopkg.in/check.v1"
 )
 
 type MapBenchSuite struct{}
@@ -65,9 +65,11 @@ func (s *MapBenchSuite) BenchmarkGet100000(c *C) {
 func (s *MapBenchSuite) BenchmarkGet1000000(c *C) {
 	benchmarkGetN(1000000, c)
 }
+
+/*
 func (s *MapBenchSuite) BenchmarkGet10000000(c *C) {
 	benchmarkGetN(10000000, c)
-}
+}*/
 
 func benchmarkGetNRand(n int, c *C) {
 	c.StopTimer()

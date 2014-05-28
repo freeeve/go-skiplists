@@ -1,9 +1,9 @@
 package skiplist
 
 import (
-	. "launchpad.net/gocheck"
 	"math/rand"
 	"testing"
+	. "gopkg.in/check.v1"
 )
 
 type MapSuite struct{}

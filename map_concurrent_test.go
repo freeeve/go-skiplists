@@ -1,11 +1,10 @@
 package skiplist
 
 import (
-	. "launchpad.net/gocheck"
-	"log"
 	"runtime"
 	"sync"
 	"time"
+	. "gopkg.in/check.v1"
 )
 
 type MapConcurrentSuite struct{}
@@ -37,7 +36,7 @@ func remover(i int, m *Map, w *sync.WaitGroup) {
 func (s *MapConcurrentSuite) TestConcurPutOverwrite(c *C) {
 	//c.Skip("only need to run when testing concurrency")
 	runtime.GOMAXPROCS(2)
-	log.Println("starting concurrent map test; writers should finish last else adjust parameters")
+	//log.Println("starting concurrent map test; writers should finish last else adjust parameters")
 	m := NewMap(compareInts)
 	var w sync.WaitGroup
 	n := 10
